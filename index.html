@@ -2,8 +2,9 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Signal Hackers Private Diary</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Private Diary ❤️</title>
 
 <style>
 *{
@@ -16,18 +17,19 @@ body{
   min-height:100vh;
   overflow:hidden;
   font-family:Arial,sans-serif;
-  color:white;
   background:
-    radial-gradient(circle at 20% 20%,#173b68,transparent 35%),
-    radial-gradient(circle at 80% 80%,#54166b,transparent 35%),
+    radial-gradient(circle at 20% 20%,#123b64,transparent 35%),
+    radial-gradient(circle at 80% 80%,#5b176c,transparent 35%),
     #050713;
+  color:white;
 }
 
-/* Background */
+/* Background animation */
 .bg{
   position:fixed;
   inset:0;
   z-index:-1;
+  overflow:hidden;
 }
 
 .orb{
@@ -35,9 +37,9 @@ body{
   width:220px;
   height:220px;
   border-radius:50%;
-  background:#00bfff30;
-  filter:blur(35px);
-  animation:float 8s infinite alternate ease-in-out;
+  background:#00c8ff35;
+  filter:blur(40px);
+  animation:move 8s infinite alternate ease-in-out;
 }
 
 .orb:nth-child(1){
@@ -48,12 +50,12 @@ body{
 .orb:nth-child(2){
   right:5%;
   bottom:5%;
-  background:#b000ff30;
+  background:#b000ff35;
 }
 
-@keyframes float{
+@keyframes move{
   to{
-    transform:translate(100px,-70px) scale(1.4);
+    transform:translate(100px,-60px) scale(1.4);
   }
 }
 
@@ -79,29 +81,33 @@ body{
 }
 
 .lock{
-  font-size:65px;
+  font-size:60px;
   margin-bottom:15px;
 }
 
 .login-box h1{
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .login-box p{
-  color:#aeb6ca;
-  margin-bottom:22px;
+  color:#b8bfd0;
+  margin-bottom:20px;
 }
 
 input{
   width:100%;
   padding:15px;
-  border:1px solid #ffffff25;
   border-radius:14px;
-  outline:none;
-  background:#0005;
+  border:1px solid #ffffff25;
+  background:#0006;
   color:white;
+  outline:none;
   font-size:16px;
   margin-bottom:14px;
+}
+
+button{
+  cursor:pointer;
 }
 
 .unlock{
@@ -117,8 +123,8 @@ input{
 
 #error{
   display:none;
-  color:#ff6078;
-  margin-top:14px;
+  color:#ff6680;
+  margin-top:15px;
 }
 
 /* Diary */
@@ -133,41 +139,39 @@ input{
 
 .title{
   margin-bottom:18px;
-  font-size:26px;
+  font-size:27px;
 }
 
-/* 3D Book */
+/* Book */
 .book{
   width:350px;
   max-width:90vw;
   height:500px;
-  position:relative;
   perspective:1800px;
+  position:relative;
 }
 
 .book-cover{
   position:absolute;
   inset:0;
-  padding:14px;
   border-radius:12px;
-  background:linear-gradient(135deg,#6d3d20,#28150c);
+  background:linear-gradient(135deg,#704020,#261308);
   box-shadow:0 30px 70px #000b;
 }
 
 .page{
   position:absolute;
   inset:14px;
-  padding:18px;
-  color:#34261d;
+  padding:16px;
+  border-radius:6px;
   background:linear-gradient(135deg,#fffdf5,#eadfc5);
-  border-radius:5px;
+  color:#35271d;
   transform-origin:left center;
-  transform-style:preserve-3d;
-  transition:transform .85s cubic-bezier(.65,.05,.36,1);
-  box-shadow:inset 0 0 25px #654d2730;
+  transition:transform .8s cubic-bezier(.65,.05,.36,1);
+  z-index:2;
 }
 
-.page.flipping{
+.page.flip{
   transform:rotateY(-180deg);
 }
 
@@ -176,12 +180,12 @@ input{
   height:330px;
   object-fit:cover;
   border-radius:6px;
-  box-shadow:0 12px 25px #0005;
+  box-shadow:0 10px 25px #0005;
 }
 
 .info{
   text-align:center;
-  margin-top:14px;
+  margin-top:13px;
 }
 
 .info h2{
@@ -190,18 +194,17 @@ input{
 }
 
 .date{
+  margin-top:5px;
   font-size:13px;
   color:#806d5d;
-  margin-top:5px;
 }
 
 .caption{
   margin-top:8px;
   font-family:Georgia,serif;
-  font-size:14px;
 }
 
-/* Buttons */
+/* Love button */
 .controls{
   margin-top:22px;
   display:flex;
@@ -210,35 +213,33 @@ input{
 }
 
 .love{
+  padding:14px 32px;
   border:0;
-  padding:14px 30px;
   border-radius:50px;
   color:white;
+  background:linear-gradient(135deg,#ff416c,#ff1744);
   font-size:17px;
   font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(135deg,#ff416c,#ff1744);
   box-shadow:0 10px 30px #ff174450;
-  transition:.2s;
 }
 
 .love:active{
-  transform:scale(.88);
+  transform:scale(.9);
 }
 
 .counter{
-  color:#c6cad5;
+  color:#c7cada;
 }
 
 .lock-btn{
   position:fixed;
   top:18px;
   right:18px;
-  border:1px solid #ffffff25;
-  background:#ffffff12;
-  color:white;
   padding:9px 15px;
+  border:1px solid #ffffff25;
   border-radius:12px;
+  color:white;
+  background:#ffffff12;
 }
 
 /* Mobile */
@@ -249,7 +250,7 @@ input{
   }
 
   .page img{
-    height:285px;
+    height:280px;
   }
 
   .title{
@@ -267,7 +268,7 @@ input{
 </div>
 
 
-<!-- PASSWORD SCREEN -->
+<!-- PASSWORD -->
 
 <section id="login">
 
@@ -282,8 +283,7 @@ input{
     <input
       id="password"
       type="password"
-      placeholder="Password"
-    >
+      placeholder="Password">
 
     <button
       class="unlock"
@@ -314,18 +314,13 @@ input{
     📖 My Private Diary
   </h1>
 
-
   <div class="book">
 
     <div class="book-cover"></div>
 
-    <div
-      class="page"
-      id="page">
+    <div class="page" id="page">
 
-      <img
-        id="photo"
-        src="memory-1.jpg">
+      <img id="photo" src="memory-1.jpg">
 
       <div class="info">
 
@@ -333,15 +328,11 @@ input{
           Signal Hackers ❤️
         </h2>
 
-        <div
-          class="date"
-          id="photoDate">
+        <div class="date" id="photoDate">
           Memory 1
         </div>
 
-        <div
-          class="caption"
-          id="photoCaption">
+        <div class="caption" id="photoCaption">
           A page from my private diary.
         </div>
 
@@ -350,7 +341,6 @@ input{
     </div>
 
   </div>
-
 
   <div class="controls">
 
@@ -372,7 +362,6 @@ input{
 <script>
 
 const PASSWORD = "signal hackers";
-
 
 const memories = [
 
@@ -399,12 +388,11 @@ const memories = [
 
 ];
 
-
 let current = 0;
 let busy = false;
 
 
-/* Unlock */
+/* Open diary */
 
 function unlockDiary(){
 
@@ -428,7 +416,7 @@ function unlockDiary(){
 }
 
 
-/* Lock */
+/* Lock diary */
 
 function lockDiary(){
 
@@ -446,7 +434,7 @@ function lockDiary(){
 }
 
 
-/* Next page */
+/* Change photo */
 
 function nextPage(){
 
@@ -457,10 +445,9 @@ function nextPage(){
   const page =
     document.getElementById("page");
 
-  page.classList.add("flipping");
+  page.classList.add("flip");
 
-
-  setTimeout(() => {
+  setTimeout(function(){
 
     current++;
 
@@ -468,9 +455,7 @@ function nextPage(){
       current = 0;
     }
 
-    const memory =
-      memories[current];
-
+    const memory = memories[current];
 
     document.getElementById("photo")
       .src = memory.image;
@@ -487,13 +472,11 @@ function nextPage(){
     document.getElementById("number")
       .textContent = current + 1;
 
-
-    page.classList.remove("flipping");
+    page.classList.remove("flip");
 
     busy = false;
 
   },450);
-
 }
 
 
@@ -501,7 +484,7 @@ function nextPage(){
 
 document
   .getElementById("password")
-  .addEventListener("keydown", function(e){
+  .addEventListener("keydown",function(e){
 
     if(e.key === "Enter"){
       unlockDiary();

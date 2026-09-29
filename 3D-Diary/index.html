@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Signal Hackers Private Diary</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at 20% 20%,#173b68,transparent 35%),
+    radial-gradient(circle at 80% 80%,#54166b,transparent 35%),
+    #050713;
+}
+
+/* Background */
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+}
+
+.orb{
+  position:absolute;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:#00bfff30;
+  filter:blur(35px);
+  animation:float 8s infinite alternate ease-in-out;
+}
+
+.orb:nth-child(1){
+  top:5%;
+  left:5%;
+}
+
+.orb:nth-child(2){
+  right:5%;
+  bottom:5%;
+  background:#b000ff30;
+}
+
+@keyframes float{
+  to{
+    transform:translate(100px,-70px) scale(1.4);
+  }
+}
+
+/* Login */
+#login{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:390px;
+  padding:35px 25px;
+  text-align:center;
+  border-radius:28px;
+  background:#ffffff12;
+  border:1px solid #ffffff25;
+  backdrop-filter:blur(20px);
+  box-shadow:0 30px 80px #0008;
+}
+
+.lock{
+  font-size:65px;
+  margin-bottom:15px;
+}
+
+.login-box h1{
+  margin-bottom:8px;
+}
+
+.login-box p{
+  color:#aeb6ca;
+  margin-bottom:22px;
+}
+
+input{
+  width:100%;
+  padding:15px;
+  border:1px solid #ffffff25;
+  border-radius:14px;
+  outline:none;
+  background:#0005;
+  color:white;
+  font-size:16px;
+  margin-bottom:14px;
+}
+
+.unlock{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  background:linear-gradient(135deg,#00bfff,#762cff);
+}
+
+#error{
+  display:none;
+  color:#ff6078;
+  margin-top:14px;
+}
+
+/* Diary */
+#diary{
+  display:none;
+  height:100vh;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:20px;
+}
+
+.title{
+  margin-bottom:18px;
+  font-size:26px;
+}
+
+/* 3D Book */
+.book{
+  width:350px;
+  max-width:90vw;
+  height:500px;
+  position:relative;
+  perspective:1800px;
+}
+
+.book-cover{
+  position:absolute;
+  inset:0;
+  padding:14px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#6d3d20,#28150c);
+  box-shadow:0 30px 70px #000b;
+}
+
+.page{
+  position:absolute;
+  inset:14px;
+  padding:18px;
+  color:#34261d;
+  background:linear-gradient(135deg,#fffdf5,#eadfc5);
+  border-radius:5px;
+  transform-origin:left center;
+  transform-style:preserve-3d;
+  transition:transform .85s cubic-bezier(.65,.05,.36,1);
+  box-shadow:inset 0 0 25px #654d2730;
+}
+
+.page.flipping{
+  transform:rotateY(-180deg);
+}
+
+.page img{
+  width:100%;
+  height:330px;
+  object-fit:cover;
+  border-radius:6px;
+  box-shadow:0 12px 25px #0005;
+}
+
+.info{
+  text-align:center;
+  margin-top:14px;
+}
+
+.info h2{
+  font-family:Georgia,serif;
+  font-size:21px;
+}
+
+.date{
+  font-size:13px;
+  color:#806d5d;
+  margin-top:5px;
+}
+
+.caption{
+  margin-top:8px;
+  font-family:Georgia,serif;
+  font-size:14px;
+}
+
+/* Buttons */
+.controls{
+  margin-top:22px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.love{
+  border:0;
+  padding:14px 30px;
+  border-radius:50px;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ff416c,#ff1744);
+  box-shadow:0 10px 30px #ff174450;
+  transition:.2s;
+}
+
+.love:active{
+  transform:scale(.88);
+}
+
+.counter{
+  color:#c6cad5;
+}
+
+.lock-btn{
+  position:fixed;
+  top:18px;
+  right:18px;
+  border:1px solid #ffffff25;
+  background:#ffffff12;
+  color:white;
+  padding:9px 15px;
+  border-radius:12px;
+}
+
+/* Mobile */
+@media(max-width:500px){
+
+  .book{
+    height:450px;
+  }
+
+  .page img{
+    height:285px;
+  }
+
+  .title{
+    font-size:22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+
+
+<!-- PASSWORD SCREEN -->
+
+<section id="login">
+
+  <div class="login-box">
+
+    <div class="lock">🔐</div>
+
+    <h1>Private Diary</h1>
+
+    <p>Enter your password</p>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+    >
+
+    <button
+      class="unlock"
+      onclick="unlockDiary()">
+      🔓 Open Diary
+    </button>
+
+    <div id="error">
+      ❌ Wrong password
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DIARY -->
+
+<section id="diary">
+
+  <button
+    class="lock-btn"
+    onclick="lockDiary()">
+    🔒 Lock
+  </button>
+
+  <h1 class="title">
+    📖 My Private Diary
+  </h1>
+
+
+  <div class="book">
+
+    <div class="book-cover"></div>
+
+    <div
+      class="page"
+      id="page">
+
+      <img
+        id="photo"
+        src="memory-1.jpg">
+
+      <div class="info">
+
+        <h2 id="photoTitle">
+          Signal Hackers ❤️
+        </h2>
+
+        <div
+          class="date"
+          id="photoDate">
+          Memory 1
+        </div>
+
+        <div
+          class="caption"
+          id="photoCaption">
+          A page from my private diary.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="controls">
+
+    <button
+      class="love"
+      onclick="nextPage()">
+      ❤️ Love
+    </button>
+
+    <div class="counter">
+      <span id="number">1</span> / 3
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+
+const PASSWORD = "signal hackers";
+
+
+const memories = [
+
+  {
+    image:"memory-1.jpg",
+    title:"Signal Hackers ❤️",
+    date:"Memory 1",
+    caption:"A page from my private diary."
+  },
+
+  {
+    image:"memory-2.jpg",
+    title:"Cyber Sentinel 💙",
+    date:"Memory 2",
+    caption:"Another special memory."
+  },
+
+  {
+    image:"memory-3.jpg",
+    title:"CSB Cyber Security ✨",
+    date:"Memory 3",
+    caption:"One more page of the diary."
+  }
+
+];
+
+
+let current = 0;
+let busy = false;
+
+
+/* Unlock */
+
+function unlockDiary(){
+
+  const password =
+    document.getElementById("password").value;
+
+  if(password === PASSWORD){
+
+    document.getElementById("login")
+      .style.display = "none";
+
+    document.getElementById("diary")
+      .style.display = "flex";
+
+  }else{
+
+    document.getElementById("error")
+      .style.display = "block";
+
+  }
+}
+
+
+/* Lock */
+
+function lockDiary(){
+
+  document.getElementById("diary")
+    .style.display = "none";
+
+  document.getElementById("login")
+    .style.display = "flex";
+
+  document.getElementById("password")
+    .value = "";
+
+  document.getElementById("error")
+    .style.display = "none";
+}
+
+
+/* Next page */
+
+function nextPage(){
+
+  if(busy) return;
+
+  busy = true;
+
+  const page =
+    document.getElementById("page");
+
+  page.classList.add("flipping");
+
+
+  setTimeout(() => {
+
+    current++;
+
+    if(current >= memories.length){
+      current = 0;
+    }
+
+    const memory =
+      memories[current];
+
+
+    document.getElementById("photo")
+      .src = memory.image;
+
+    document.getElementById("photoTitle")
+      .textContent = memory.title;
+
+    document.getElementById("photoDate")
+      .textContent = memory.date;
+
+    document.getElementById("photoCaption")
+      .textContent = memory.caption;
+
+    document.getElementById("number")
+      .textContent = current + 1;
+
+
+    page.classList.remove("flipping");
+
+    busy = false;
+
+  },450);
+
+}
+
+
+/* Enter key */
+
+document
+  .getElementById("password")
+  .addEventListener("keydown", function(e){
+
+    if(e.key === "Enter"){
+      unlockDiary();
+    }
+
+  });
+
+</script>
+
+</body>
+  </html>
